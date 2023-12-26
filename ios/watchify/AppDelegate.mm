@@ -1,4 +1,6 @@
 #import "AppDelegate.h"
+#import "Orientation.h" // react-native-orientation-locker
+
 
 #import <React/RCTBundleURLProvider.h>
 
@@ -13,7 +15,11 @@
 
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
-
+// react-native-orientation-locker
+- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
+  return [Orientation getOrientation];
+}
+// react-native-orientation-locker
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
 {
   return [self getBundleURL];

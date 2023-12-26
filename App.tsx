@@ -3,11 +3,14 @@ import React from 'react';
 import 'react-native-gesture-handler';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import Navigator from './src/navigation';
+import ActionBarProvider from '@src/stores/actionBar';
 const App = () => {
   return (
-    <GestureHandlerRootView style={styles.root}>
-      <Navigator />
-    </GestureHandlerRootView>
+    <ActionBarProvider>
+      <GestureHandlerRootView style={styles.root}>
+        <Navigator />
+      </GestureHandlerRootView>
+    </ActionBarProvider>
   );
 };
 

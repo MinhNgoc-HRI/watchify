@@ -11,7 +11,9 @@ import com.facebook.react.defaults.DefaultReactHost.getDefaultReactHost
 import com.facebook.react.defaults.DefaultReactNativeHost
 import com.facebook.react.flipper.ReactNativeFlipper
 import com.facebook.soloader.SoLoader
-
+// react-native-orientation-locker
+import org.wonday.orientation.OrientationActivityLifecycle
+// react-native-orientation-locker
 class MainApplication : Application(), ReactApplication {
 
   override val reactNativeHost: ReactNativeHost =
@@ -41,5 +43,8 @@ class MainApplication : Application(), ReactApplication {
       load()
     }
     ReactNativeFlipper.initializeFlipper(this, reactNativeHost.reactInstanceManager)
+    // react-native-orientation-locker
+    registerActivityLifecycleCallbacks(OrientationActivityLifecycle.getInstance())
+    // react-native-orientation-locker
   }
 }

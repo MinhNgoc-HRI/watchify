@@ -137,3 +137,4 @@ export const useResponsiveScreenFontSize = (f: number) => {
   return fontCalculation(height, width, f);
 };
 export const isIOS = Platform.OS === 'ios';
+export const DIMENSION = Dimensions.get('window');
