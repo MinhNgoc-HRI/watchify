@@ -1,16 +1,26 @@
 import {StyleSheet} from 'react-native';
 import React from 'react';
-import 'react-native-gesture-handler';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import Navigator from './src/navigation';
-import ActionBarProvider from '@src/stores/actionBar';
+import PlayerProvider from '@src/stores/player';
+import {
+  SafeAreaProvider,
+  initialWindowMetrics,
+} from 'react-native-safe-area-context';
+import LoadingPortal from '@src/components/LoadingPotal';
+import {Host} from 'react-native-portalize';
 const App = () => {
   return (
-    <ActionBarProvider>
-      <GestureHandlerRootView style={styles.root}>
-        <Navigator />
-      </GestureHandlerRootView>
-    </ActionBarProvider>
+    <PlayerProvider>
+      <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+        <GestureHandlerRootView style={styles.root}>
+          <Host>
+            <Navigator />
+          </Host>
+          <LoadingPortal />
+        </GestureHandlerRootView>
+      </SafeAreaProvider>
+    </PlayerProvider>
   );
 };
 

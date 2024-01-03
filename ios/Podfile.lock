@@ -967,6 +967,8 @@ PODS:
   - React-Mapbuffer (0.73.1):
     - glog
     - React-debug
+  - react-native-create-thumbnail (1.6.4):
+    - React-Core
   - react-native-orientation-locker (1.6.0):
     - React-Core
   - react-native-pager-view (6.2.3):
@@ -980,6 +982,8 @@ PODS:
     - react-native-video/Video (= 6.0.0-beta.3)
   - react-native-video/Video (6.0.0-beta.3):
     - PromisesSwift
+    - React-Core
+  - react-native-webview (13.6.3):
     - React-Core
   - React-nativeconfig (0.73.1)
   - React-NativeModulesApple (0.73.1):
@@ -1234,10 +1238,12 @@ DEPENDENCIES:
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector-modern`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
+  - react-native-create-thumbnail (from `../node_modules/react-native-create-thumbnail`)
   - react-native-orientation-locker (from `../node_modules/react-native-orientation-locker`)
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-video (from `../node_modules/react-native-video`)
+  - react-native-webview (from `../node_modules/react-native-webview`)
   - React-nativeconfig (from `../node_modules/react-native/ReactCommon`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -1350,6 +1356,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/logger"
   React-Mapbuffer:
     :path: "../node_modules/react-native/ReactCommon"
+  react-native-create-thumbnail:
+    :path: "../node_modules/react-native-create-thumbnail"
   react-native-orientation-locker:
     :path: "../node_modules/react-native-orientation-locker"
   react-native-pager-view:
@@ -1358,6 +1366,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-video:
     :path: "../node_modules/react-native-video"
+  react-native-webview:
+    :path: "../node_modules/react-native-webview"
   React-nativeconfig:
     :path: "../node_modules/react-native/ReactCommon"
   React-NativeModulesApple:
@@ -1460,10 +1470,12 @@ SPEC CHECKSUMS:
   React-jsinspector: 369048694e39942063c5d08e9580b43e2edd379a
   React-logger: e0c1e918d9588a9f39c9bc62d9d6bfe9ca238d9d
   React-Mapbuffer: 9731a0a63ebaf8976014623c4d637744d7353a7c
+  react-native-create-thumbnail: e022bcdcba8a0b4529a50d3fa1a832ec921be39d
   react-native-orientation-locker: 4409c5b12b65f942e75449872b4f078b6f27af81
   react-native-pager-view: d81ab2060b9caf57ca8c3a0d57467ff407cdb825
   react-native-safe-area-context: 0ee144a6170530ccc37a0fd9388e28d06f516a89
   react-native-video: 60ecad11b7179ec0e2012dea643775b4fca9b224
+  react-native-webview: 88293a0f23eca8465c0433c023ec632930e644d0
   React-nativeconfig: 37aecd26d64b79327c3f10e43b2e9a6c425e0a60
   React-NativeModulesApple: 9ca6d2eaa1dd5606588262195b46d0774bdec83a
   React-perflogger: 5ffc4d6ccb74eaac7b8b2867e58a447232483d6d

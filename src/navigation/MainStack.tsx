@@ -9,7 +9,7 @@ const Stack = createStackNavigator<MainStackParamList>();
 const MainStack: React.FC<any> = () => {
   return (
     <Stack.Navigator
-      initialRouteName={ROUTER_MAIN.ON_BROAD_SCREEN}
+      initialRouteName={ROUTER_MAIN.HOME_STACK}
       screenOptions={{
         headerShown: false,
         headerStyle: {

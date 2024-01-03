@@ -15,6 +15,7 @@ const HomeTopTabStack = forwardRef<OHomeTopTabStack, IHomeTopTabStack>(
         initialRouteName={ROUTER_HOME_TAB.SUGGEST_SCREEN}
         screenOptions={{
           swipeEnabled: false,
+          lazy: true,
         }}
         // eslint-disable-next-line react/no-unstable-nested-components
         tabBar={props => <TopTabBar {...props} />}>
@@ -22,7 +23,30 @@ const HomeTopTabStack = forwardRef<OHomeTopTabStack, IHomeTopTabStack>(
           name={ROUTER_HOME_TAB.SUGGEST_SCREEN}
           component={SuggestScreen}
         />
-        <Tab.Screen name={ROUTER_HOME_TAB.FILM_SCEEN} component={FilmScreen} />
+        <Tab.Screen name={ROUTER_HOME_TAB.PHIM_LE} component={FilmScreen} />
+        <Tab.Screen name={ROUTER_HOME_TAB.PHIM_BO} component={FilmScreen} />
+        <Tab.Screen name={ROUTER_HOME_TAB.HOAT_HINH} component={FilmScreen} />
+        <Tab.Screen name={ROUTER_HOME_TAB.TV_SHOW} component={FilmScreen} />
+        <Tab.Screen
+          name={ROUTER_HOME_TAB.PHIM_BO_DANG_CHIEU}
+          component={FilmScreen}
+        />
+        <Tab.Screen
+          name={ROUTER_HOME_TAB.PHIM_BO_SAP_CHIEU}
+          component={FilmScreen}
+        />
+        <Tab.Screen
+          name={ROUTER_HOME_TAB.PHIM_BO_HOAN_THANH}
+          component={FilmScreen}
+        />
+        <Tab.Screen
+          name={ROUTER_HOME_TAB.PHIM_THUYET_MINH}
+          component={FilmScreen}
+        />
+        <Tab.Screen
+          name={ROUTER_HOME_TAB.PHIM_VIETSUB}
+          component={FilmScreen}
+        />
       </Tab.Navigator>
     );
   },

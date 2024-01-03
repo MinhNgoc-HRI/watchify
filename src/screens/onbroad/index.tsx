@@ -3,7 +3,6 @@ import {MainStackScreenProps} from '@src/navigation/types';
 import {
   Box,
   Text,
-  Thumb,
   TouchRippleSingle,
   fontSizeLine,
   getOffset,
@@ -23,6 +22,7 @@ import {
   ROUTER_HOME_TAB,
   ROUTER_MAIN,
 } from '@src/navigation/routes';
+import FastImage from 'react-native-fast-image';
 export interface IOnBroadScreen
   extends MainStackScreenProps<'ON_BROAD_SCREEN'> {}
 export type OOnBroadScreen = {};
@@ -32,10 +32,9 @@ const OnBroadScreen = forwardRef<OOnBroadScreen, IOnBroadScreen>(
     const progressValue = useSharedValue(0);
     const renderItem = useCallback(
       (info: CarouselRenderItemInfo<OnbroadType>) => {
-        console.log({info});
         return (
           <Box key={info.index} width={DIMENSION.width} middle center>
-            <Thumb
+            <FastImage
               source={info.item.image}
               style={styles.img}
               resizeMode="cover"

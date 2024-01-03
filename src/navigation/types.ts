@@ -20,12 +20,15 @@ export type HomeStackParamList = {
 };
 export type HomeTopTabStackParamList = {
   SUGGEST_SCREEN: undefined;
-  FILM_SCEEN: undefined;
-  STAR_SCREEN: undefined;
-  ENTERTAINMENT_SCREEN: undefined;
-  MUSIC_SCREEN: undefined;
-  TV_SHOW_CRCEEN: undefined;
-  SPORT_SCREEN: undefined;
+  PHIM_LE: undefined;
+  PHIM_BO: undefined;
+  HOAT_HINH: undefined;
+  TV_SHOW: undefined;
+  PHIM_VIETSUB: undefined;
+  PHIM_THUYET_MINH: undefined;
+  PHIM_BO_DANG_CHIEU: undefined;
+  PHIM_BO_SAP_CHIEU: undefined;
+  PHIM_BO_HOAN_THANH: undefined;
 };
 export type RoutesType = MainStackParamList;
 export type MainStackScreenProps<T extends keyof MainStackParamList> =

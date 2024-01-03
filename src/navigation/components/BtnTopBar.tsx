@@ -31,9 +31,7 @@ const ButtonTopBar = forwardRef<OButtonTopBar, IButtonTopBar>((props, ref) => {
   useImperativeHandle(ref, () => ({}));
   const input = routes.map((_, i) => i);
   const output = routes.map((_, i) => (i === index ? 1 : 0));
-  const outputColor = routes.map((_, i) =>
-    i === index ? 'rgba(255,255,255,1)' : 'rgba(176,176,187,1)',
-  );
+  const outputOpacity = routes.map((_, i) => (i === index ? 1 : 0.7));
   const convertTabName = useCallback(
     (
       n: TabNavigationState<HomeTopTabStackParamList>['routes'][number]['name'],
@@ -41,20 +39,24 @@ const ButtonTopBar = forwardRef<OButtonTopBar, IButtonTopBar>((props, ref) => {
       switch (n) {
         case ROUTER_HOME_TAB.SUGGEST_SCREEN:
           return 'Đề xuất';
-        case ROUTER_HOME_TAB.FILM_SCEEN:
-          return 'Phim';
-        case ROUTER_HOME_TAB.STAR_SCREEN:
-          return 'Sao';
-        case ROUTER_HOME_TAB.ENTERTAINMENT_SCREEN:
-          return 'Giải trí';
-        case ROUTER_HOME_TAB.MUSIC_SCREEN:
-          return 'Nhạc';
-        case ROUTER_HOME_TAB.TV_SHOW_CRCEEN:
-          return 'TV Show';
-        case ROUTER_HOME_TAB.SPORT_SCREEN:
-          return 'Thể thao';
-        case ROUTER_HOME_TAB.SUGGEST_SCREEN:
-          return 'Gợi ý';
+        case ROUTER_HOME_TAB.PHIM_LE:
+          return 'Phim lẻ';
+        case ROUTER_HOME_TAB.PHIM_BO:
+          return 'Phim bộ';
+        case ROUTER_HOME_TAB.HOAT_HINH:
+          return 'Hoạt hình';
+        case ROUTER_HOME_TAB.TV_SHOW:
+          return 'TV Shows';
+        case ROUTER_HOME_TAB.PHIM_THUYET_MINH:
+          return 'Phim thuyết minh';
+        case ROUTER_HOME_TAB.PHIM_VIETSUB:
+          return 'Phim vietsub';
+        case ROUTER_HOME_TAB.PHIM_BO_DANG_CHIEU:
+          return 'Phim bộ (đang chiếu)';
+        case ROUTER_HOME_TAB.PHIM_BO_SAP_CHIEU:
+          return 'Phim bộ (sắp chiếu)';
+        case ROUTER_HOME_TAB.PHIM_BO_HOAN_THANH:
+          return 'Phim bộ (hoàn thành)';
         default:
           return '';
       }
@@ -67,26 +69,28 @@ const ButtonTopBar = forwardRef<OButtonTopBar, IButtonTopBar>((props, ref) => {
       <BoxAnimated
         middle
         center
+        marginHorizontal={widthLize(6)}
         paddingVertical={heightLize(12)}
-        width={widthLize(70)}>
+        style={{
+          opacity: position.interpolate({
+            inputRange: input,
+            outputRange: outputOpacity,
+            extrapolate: 'clamp',
+          }),
+        }}>
         <TextAnimated
           weight="700"
           size={fontSizeLine(14)}
           lineHeight={fontSizeLine(20)}
-          marginLeft={widthLize(4)}
-          style={{
-            color: position.interpolate({
-              inputRange: input,
-              outputRange: outputColor,
-            }),
-          }}>
+          color={defaultColor.text_primary}>
           {convertTabName(name)}
         </TextAnimated>
         <BoxAnimated
           position="absolute"
           bottom={0}
+          left={0}
           height={heightLize(3)}
-          width={widthLize(70)}
+          width={'100%'}
           style={{
             opacity: position.interpolate({
               inputRange: input,
