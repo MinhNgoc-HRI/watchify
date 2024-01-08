@@ -11,7 +11,7 @@ import {
   widthLize,
 } from 'pmn-rn-component';
 import {defaultColor} from '@src/utils/theme';
-import {Item} from '@src/api/film';
+import {DetailFilm, DetailFilmServerDaum} from '@src/api/types';
 import IconDropdown from '@src/assets/svg/IconDropdown';
 import FastImage from 'react-native-fast-image';
 import {baseImgUrl} from '@src/api/config';
@@ -23,11 +23,12 @@ import {DIMENSION} from '@src/utils/dimension';
 import Playlist, {PlaylistRef} from './Playlist';
 
 export type ContentProps = {
-  data?: Item;
+  data?: DetailFilm;
+  episode?: DetailFilmServerDaum;
 };
 export type ContentRef = {};
 const Content = forwardRef<ContentRef, ContentProps>((props, _ref) => {
-  const {data} = props;
+  const {data, episode} = props;
   const refPlaylist = useRef<PlaylistRef>(null);
   const episodeTotal = data?.episodes?.[0]?.server_data?.length;
   const imgUrl = baseImgUrl + '/' + data?.thumb_url;
@@ -74,7 +75,8 @@ const Content = forwardRef<ContentRef, ContentProps>((props, _ref) => {
               size={fontSizeLine(12)}
               weight="bold"
               color={defaultColor.text_secondary}>
-              {episodeTotal && `Tập ${1}/${episodeTotal}`}
+              {episodeTotal &&
+                `Tập ${Number(episode?.slug) || 1}/${episodeTotal}`}
             </Text>
             <Box width={widthLize(6)} />
             <TouchRippleSingle onPress={() => refPlaylist?.current?.open()}>

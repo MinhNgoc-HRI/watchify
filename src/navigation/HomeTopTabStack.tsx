@@ -2,9 +2,13 @@ import React, {forwardRef, memo} from 'react';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {HomeTopTabStackParamList} from './types';
 import {ROUTER_HOME_TAB} from './routes';
+import TopTabBar from './components/TopTabBar';
 import SuggestScreen from '@src/screens/home/screen/suggest';
 import FilmScreen from '@src/screens/home/screen/film';
-import TopTabBar from './components/TopTabBar';
+import SeriesTV from '@src/screens/home/screen/seriesTv';
+import HoatHinhScreen from '@src/screens/home/screen/hoathinh';
+import TVShowScreen from '@src/screens/home/screen/tvshow';
+import {defaultColor} from '@src/utils/theme';
 const Tab = createMaterialTopTabNavigator<HomeTopTabStackParamList>();
 export type IHomeTopTabStack = {};
 export type OHomeTopTabStack = {};
@@ -13,6 +17,9 @@ const HomeTopTabStack = forwardRef<OHomeTopTabStack, IHomeTopTabStack>(
     return (
       <Tab.Navigator
         initialRouteName={ROUTER_HOME_TAB.SUGGEST_SCREEN}
+        sceneContainerStyle={{
+          backgroundColor: defaultColor.bg_primary,
+        }}
         screenOptions={{
           swipeEnabled: false,
           lazy: true,
@@ -24,29 +31,12 @@ const HomeTopTabStack = forwardRef<OHomeTopTabStack, IHomeTopTabStack>(
           component={SuggestScreen}
         />
         <Tab.Screen name={ROUTER_HOME_TAB.PHIM_LE} component={FilmScreen} />
-        <Tab.Screen name={ROUTER_HOME_TAB.PHIM_BO} component={FilmScreen} />
-        <Tab.Screen name={ROUTER_HOME_TAB.HOAT_HINH} component={FilmScreen} />
-        <Tab.Screen name={ROUTER_HOME_TAB.TV_SHOW} component={FilmScreen} />
+        <Tab.Screen name={ROUTER_HOME_TAB.PHIM_BO} component={SeriesTV} />
         <Tab.Screen
-          name={ROUTER_HOME_TAB.PHIM_BO_DANG_CHIEU}
-          component={FilmScreen}
+          name={ROUTER_HOME_TAB.HOAT_HINH}
+          component={HoatHinhScreen}
         />
-        <Tab.Screen
-          name={ROUTER_HOME_TAB.PHIM_BO_SAP_CHIEU}
-          component={FilmScreen}
-        />
-        <Tab.Screen
-          name={ROUTER_HOME_TAB.PHIM_BO_HOAN_THANH}
-          component={FilmScreen}
-        />
-        <Tab.Screen
-          name={ROUTER_HOME_TAB.PHIM_THUYET_MINH}
-          component={FilmScreen}
-        />
-        <Tab.Screen
-          name={ROUTER_HOME_TAB.PHIM_VIETSUB}
-          component={FilmScreen}
-        />
+        <Tab.Screen name={ROUTER_HOME_TAB.TV_SHOW} component={TVShowScreen} />
       </Tab.Navigator>
     );
   },

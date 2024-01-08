@@ -71,7 +71,7 @@ export const PlayerAnimted = ({
 }) => {
   const insets = useSafeAreaInsets();
   // const insetsRefs = useRef(insets);
-  const {film} = useFilmStore();
+  const {film, episode} = useFilmStore();
   const bufferTime = useSharedValue<number>(0);
   const btheight =
     BOTTOM_TAB_HEIGHT +
@@ -442,7 +442,7 @@ export const PlayerAnimted = ({
             </BoxAnimated>
             <Player
               source={{
-                uri: film?.episodes?.[0]?.server_data?.[0]?.link_m3u8 || '',
+                uri: episode?.link_m3u8 || '',
               }}
               showOnStart={false}
               poster={`${baseImgUrl}/${film?.poster_url}`}
@@ -458,9 +458,6 @@ export const PlayerAnimted = ({
               }}
               onTapMore={() => {
                 // optionsModalRef.current?.present();
-              }}
-              onToggleAutoPlay={(state: boolean) => {
-                console.log(`onToggleAutoPlay state: ${state}`);
               }}
               videoDefaultHeight={VIDEO_DEFAULT_HEIGHT}
               //   ref={videoPlayerRef}
@@ -495,11 +492,11 @@ export const PlayerAnimted = ({
           style={[styles.flex1, getContentStyle]}>
           <ScrollView>
             {/* content video here */}
-            <Content data={film} />
+            <Content data={film} episode={episode} />
             {/* content video here */}
           </ScrollView>
           <BoxAnimated
-            pointerEvents={store.snapPoint === SNAP_POINT[0] ? 'none' : 'none'}
+            pointerEvents="none"
             style={[styles.backdrop, getBackdropStyle]}
           />
         </BoxAnimated>

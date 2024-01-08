@@ -9,7 +9,7 @@ import {
 } from 'pmn-rn-component';
 import FastImage from 'react-native-fast-image';
 import {BOTTOM_TAB_HEIGHT} from '@src/navigation/components/BottomTabBar';
-import {OFilm} from '@src/api/types';
+import {Film} from '@src/api/types';
 import {baseImgUrl} from '@src/api/config';
 import {defaultColor} from '@src/utils/theme';
 import {convertNumberToView} from '@src/utils/format';
@@ -20,17 +20,17 @@ import {useFilmStore} from '@src/stores/film';
 import LoadingPortal from '@src/components/LoadingPotal';
 import {getDetailFilm} from '@src/api/film';
 
-export type IListFilm = {
+export type ListFilmProps = {
   onEndReachedHandle: () => void;
   loading?: boolean;
-  films?: OFilm[];
+  films?: Film[];
 };
-export type OListFilm = {};
-const ListFilm = forwardRef<OListFilm, IListFilm>((props, _ref) => {
+export type ListFilmRef = {};
+const ListFilm = forwardRef<ListFilmRef, ListFilmProps>((props, _ref) => {
   const {films, loading, onEndReachedHandle} = props;
 
   const {dispatch} = useContext(PlayerContext);
-  const {setFilmStore} = useFilmStore();
+  const {setFilmStore, setEpisode} = useFilmStore();
   const renderEpisode = useCallback((e?: string) => {
     return (
       <Box
@@ -68,7 +68,7 @@ const ListFilm = forwardRef<OListFilm, IListFilm>((props, _ref) => {
     );
   }, []);
   const renderItem = useCallback(
-    (info: ListRenderItemInfo<OFilm>) => {
+    (info: ListRenderItemInfo<Film>) => {
       const {episode_current, quality, slug} = info.item;
       return (
         <TouchRippleSingle
@@ -80,6 +80,10 @@ const ListFilm = forwardRef<OListFilm, IListFilm>((props, _ref) => {
                 const data = e?.data?.data?.item;
                 if (data) {
                   setFilmStore(data);
+                  const i = data?.episodes?.[0]?.server_data?.[0];
+                  if (i) {
+                    setEpisode(i);
+                  }
                   LoadingPortal.hide();
                   dispatch(setPlayerPoint(0));
                 } else {
@@ -123,7 +127,7 @@ const ListFilm = forwardRef<OListFilm, IListFilm>((props, _ref) => {
         </TouchRippleSingle>
       );
     },
-    [dispatch, renderEpisode, renderQuality, setFilmStore],
+    [dispatch, renderEpisode, renderQuality, setEpisode, setFilmStore],
   );
   return (
     <FlashList
@@ -133,7 +137,6 @@ const ListFilm = forwardRef<OListFilm, IListFilm>((props, _ref) => {
       numColumns={3}
       onEndReachedThreshold={0.1}
       onEndReached={onEndReachedHandle}
-      pagingEnabled
       keyExtractor={(item: any, _index: number) => {
         return `${item._id}`;
       }}

@@ -12,6 +12,7 @@ export const ROUTER_MAIN: Entries<MainStackParamList> = {
   LOGIN_SCREEN: 'LOGIN_SCREEN',
   HOME_STACK: 'HOME_STACK',
   EXPLORE_SCREEN: 'EXPLORE_SCREEN',
+  SEARCH_SCREEN: 'SEARCH_SCREEN',
 };
 export const ROUTER_HOME: Entries<HomeStackParamList> = {
   HOME_SCREEN: 'HOME_SCREEN',

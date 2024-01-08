@@ -8,15 +8,15 @@ import ListFilm from '../components/ListFilm';
 import {useControlList} from '../hook/useControlList';
 import {APIs} from '@src/api/config';
 import {Category, Country} from '@src/api/types';
-export interface IFilmScreen extends HomeTopTabStackScreenProps<'PHIM_LE'> {}
-export type OFilmScreen = {};
-const FilmScreen = forwardRef<OFilmScreen, IFilmScreen>((props, _ref) => {
+export interface ITVShowScreen extends HomeTopTabStackScreenProps<'TV_SHOW'> {}
+export type OTVShowScreen = {};
+const TVShowScreen = forwardRef<OTVShowScreen, ITVShowScreen>((props, _ref) => {
   const {} = props;
   const {} = props;
   const [cate, setCate] = useState<Category | undefined>(DEFAULT_FILTER);
   const [coun, setCoun] = useState<Country | undefined>(DEFAULT_FILTER);
   const {films, onEndReachedHandle, loading} = useControlList(
-    APIs.FIML,
+    APIs.TV_SHOW,
     1,
     cate?.slug,
     coun?.slug,
@@ -39,4 +39,4 @@ const FilmScreen = forwardRef<OFilmScreen, IFilmScreen>((props, _ref) => {
   );
 });
 
-export default memo(FilmScreen);
+export default memo(TVShowScreen);

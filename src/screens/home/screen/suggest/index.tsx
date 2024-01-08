@@ -2,8 +2,8 @@ import React, {forwardRef, memo} from 'react';
 import {HomeTopTabStackScreenProps} from '@src/navigation/types';
 import {defaultColor} from '@src/utils/theme';
 import {Box} from 'pmn-rn-component';
-import ListFilm from '../film/components/ListFilm';
-import {useControlList} from '../film/hook/useControlList';
+import ListFilm from '../components/ListFilm';
+import {useControlList} from '../hook/useControlList';
 import {APIs} from '@src/api/config';
 export interface ISuggestScreen
   extends HomeTopTabStackScreenProps<'SUGGEST_SCREEN'> {}

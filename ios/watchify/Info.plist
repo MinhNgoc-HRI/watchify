@@ -47,5 +47,20 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		 <key>NSExceptionDomains</key>
+		 <dict>
+		 	 <key>https://img.ophim9.cc</key>
+			 <dict>
+            <key>NSIncludesSubdomains</key>
+            <true/>
+            <key>NSExceptionRequiresForwardSecrecy</key>
+            <false/>
+            <key>NSTemporaryExceptionMinimumTLSVersion</key>
+            <string>TLSv1.0</string>
+        </dict>
+		 </dict>
+	</dict>
 </dict>
 </plist>

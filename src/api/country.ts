@@ -1,23 +1,23 @@
 import {APIs} from './config';
 import {handleError} from './handleError';
 import request from './request';
-import {ApiResponse, Category} from './types';
+import {ApiResponse, Country} from './types';
 
-export interface ListCategoryRes {
+export interface ListCountryRes {
   status: string;
   message: string;
-  data: ListCategoryData;
+  data: ListCountryData;
 }
 
-export interface ListCategoryData {
-  items: Category[];
+export interface ListCountryData {
+  items: Country[];
 }
 
-export const getListCategory: () => Promise<
-  ApiResponse<ListCategoryRes>
+export const getListCountry: () => Promise<
+  ApiResponse<ListCountryRes>
 > = async () => {
   try {
-    const res = await request().get(APIs.CATEGORY);
+    const res = await request().get(APIs.COUNTRY);
     const {data} = res;
     return {
       success: true,

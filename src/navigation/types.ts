@@ -10,6 +10,7 @@ export type MainStackParamList = {
   LOGIN_SCREEN: undefined;
   HOME_STACK: NavigatorScreenParams<HomeStackParamList>;
   EXPLORE_SCREEN: undefined;
+  SEARCH_SCREEN: undefined;
 };
 export type HomeStackParamList = {
   HOME_SCREEN: NavigatorScreenParams<HomeTopTabStackParamList>;

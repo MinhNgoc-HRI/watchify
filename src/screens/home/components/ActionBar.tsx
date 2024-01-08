@@ -14,13 +14,15 @@ import IconConnect from '@src/assets/svg/IconConnect';
 import IconAdd from '@src/assets/svg/IconAdd';
 import IconNoti from '@src/assets/svg/IconNoti';
 import IconSearch from '@src/assets/svg/IconSearch';
+import {useNavigation} from '@react-navigation/native';
+import {ROUTER_MAIN} from '@src/navigation/routes';
 
 export const ACTION_BAR_HEIGHT = heightLize(64);
 export type IActionBar = {};
 export type OActionBar = {};
 const ActionBar = forwardRef<OActionBar, IActionBar>((props, _ref) => {
   const {} = props;
-
+  const navigation = useNavigation();
   return (
     <Box
       width={DIMENSION.width}
@@ -51,7 +53,8 @@ const ActionBar = forwardRef<OActionBar, IActionBar>((props, _ref) => {
           <IconNoti />
         </TouchRippleSingle>
         <Box width={widthLize(16)} />
-        <TouchRippleSingle>
+        <TouchRippleSingle
+          onPress={() => navigation.navigate(ROUTER_MAIN.SEARCH_SCREEN)}>
           <IconSearch />
         </TouchRippleSingle>
       </Box>

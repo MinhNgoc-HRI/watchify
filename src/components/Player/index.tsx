@@ -68,6 +68,7 @@ import IconLeft from '@src/assets/svg/IconLeft';
 import VideoLoader from './VideoLoader';
 import {DIMENSION} from '@src/utils/dimension';
 import Ripple from './Ripple';
+import {defaultColor} from '@src/utils/theme';
 
 const BoxAnimated = Animated.createAnimatedComponent(Box);
 const {width, height} = Dimensions.get('window');
@@ -87,8 +88,6 @@ export interface PlayerProps extends ReactVideoProps, ReactVideoEvents {
   headerBarTitle?: string;
   onTapBack?: () => void;
   navigation?: any;
-  autoPlay?: boolean;
-  onToggleAutoPlay?: (state: boolean) => void;
   onTapMore?: () => void;
   doubleTapInterval?: number;
   theme?: SliderThemeType;
@@ -110,8 +109,6 @@ export interface PlayerProps extends ReactVideoProps, ReactVideoEvents {
   renderMore?: () => JSX.Element;
   renderFullScreen?: () => JSX.Element;
   onVideoPlayEnd?: () => void;
-  onAutoPlayText?: string;
-  offAutoPlayText?: string;
   children?: any;
   onPostProgress?: (data: OnProgressData) => void;
   onPostSeek?: (data: OnSeekData) => void;
@@ -154,14 +151,12 @@ const Player = forwardRef<PlayerRef, PlayerProps>((props, ref) => {
     headerBarTitle = '',
     onTapBack,
     navigation,
-    autoPlay = false,
-    onToggleAutoPlay,
     onTapMore,
     doubleTapInterval = 500,
     theme = {
-      minimumTrackTintColor: palette.Main(1),
-      maximumTrackTintColor: palette.B(0.6),
-      cacheTrackTintColor: palette.G1(1),
+      minimumTrackTintColor: defaultColor.primary,
+      maximumTrackTintColor: defaultColor.text_secondary,
+      cacheTrackTintColor: defaultColor.text_primary,
       bubbleBackgroundColor: palette.B(0.8),
       disableMinTrackTintColor: palette.Main(1),
     },
@@ -179,8 +174,6 @@ const Player = forwardRef<PlayerRef, PlayerProps>((props, ref) => {
     renderFullScreen,
     renderFullScreenBackIcon,
     onVideoPlayEnd,
-    onAutoPlayText = 'Autoplay is on',
-    offAutoPlayText = 'Autoplay is off',
     children,
     onPostProgress,
     onPostSeek,
@@ -206,17 +199,14 @@ const Player = forwardRef<PlayerRef, PlayerProps>((props, ref) => {
   const [isLoadEnd, setIsLoadEnd] = useState(false);
   const [loading, setIsLoading] = useState(false);
   const [showTimeRemaining, setShowTimeRemaining] = useState(true);
-  const [allowAutoPlayVideo, setAllowAutoPlayVideo] = useState(autoPlay);
   const videoPlayer = useRef<VideoRef>(null);
   const mounted = useRef(false);
-  const autoPlayAnimation = useSharedValue(autoPlay ? 1 : 0);
   const {rippleLeft, rippleRight} = useRefs();
   /**
    * reanimated value
    */
   const controlViewOpacity = useSharedValue(showOnStart ? 1 : 0);
 
-  const autoPlayTextAnimation = useSharedValue(0);
   const doubleLeftOpacity = useSharedValue(0);
   const doubleRightOpacity = useSharedValue(0);
 
@@ -405,7 +395,6 @@ const Player = forwardRef<PlayerRef, PlayerProps>((props, ref) => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   /**
    * on pan event
    */
@@ -453,8 +442,6 @@ const Player = forwardRef<PlayerRef, PlayerProps>((props, ref) => {
     }
     if (success) {
       if (controlViewOpacity.value === 0) {
-        // controlViewOpacity.value = withTiming(1, controlAnimteConfig);
-        // setControlTimeout();
         controlViewOpacity.value = withSequence(
           withTiming(1, controlAnimteConfig),
           withDelay(controlTimeout, withTiming(0, controlAnimteConfig)),
@@ -628,8 +615,10 @@ const Player = forwardRef<PlayerRef, PlayerProps>((props, ref) => {
     const {currentTime: cTime, playableDuration} = data;
     if (playableDuration < cTime) {
       setIsLoading(true);
+      onPausedChange?.(true);
       hideControlAnimation();
     } else {
+      onPausedChange?.(false);
       setIsLoading(false);
     }
     if (!isScrubbing.value) {
@@ -641,26 +630,6 @@ const Player = forwardRef<PlayerRef, PlayerProps>((props, ref) => {
     if (onPostProgress) {
       onPostProgress(data);
     }
-  };
-  /**
-   * on toggle auto play mode
-   * @returns
-   */
-  const toggleAutoPlayOnJS = () => {
-    setAllowAutoPlayVideo(!allowAutoPlayVideo);
-    onToggleAutoPlay?.(!allowAutoPlayVideo);
-  };
-  const toggleAutoPlay = () => {
-    'worklet';
-    const status = checkTapTakesEffect();
-    if (!status) {
-      return;
-    }
-
-    autoPlayAnimation.value = autoPlayAnimation.value === 0 ? 0.5 : 0;
-    autoPlayTextAnimation.value = withTiming(1);
-    autoPlayTextAnimation.value = withDelay(3000, withTiming(0));
-    runOnJS(toggleAutoPlayOnJS)();
   };
 
   const onMoreTapHandler = () => {
@@ -791,12 +760,6 @@ const Player = forwardRef<PlayerRef, PlayerProps>((props, ref) => {
     };
   }, []);
 
-  const autoPlayTextStyle = useAnimatedStyle(() => {
-    return {
-      opacity: autoPlayTextAnimation.value,
-    };
-  }, []);
-
   const getDoubleLeftStyle = useAnimatedStyle(() => {
     return {
       opacity: withTiming(doubleLeftOpacity.value),
@@ -823,11 +786,6 @@ const Player = forwardRef<PlayerRef, PlayerProps>((props, ref) => {
   const fullscreenAnimatedProps = useAnimatedProps(() => {
     return {
       progress: withTiming(isFullScreen.value ? 1 : 0),
-    };
-  }, []);
-  const autoPlayAnimatedProps = useAnimatedProps(() => {
-    return {
-      progress: withTiming(autoPlayAnimation.value, {duration: 600}),
     };
   }, []);
   return (
@@ -882,28 +840,6 @@ const Player = forwardRef<PlayerRef, PlayerProps>((props, ref) => {
                 ]}>
                 {Boolean(onTapBack) && _renderBack()}
                 <Box style={controlStyle.line}>
-                  {Boolean(onToggleAutoPlay) && (
-                    <BoxAnimated
-                      style={[controlStyle.autoPlayText, autoPlayTextStyle]}>
-                      <Text
-                        size={fontSizeLine(11)}
-                        lineHeight={fontSizeLine(16)}
-                        color={'#fff'}>
-                        {allowAutoPlayVideo ? onAutoPlayText : offAutoPlayText}
-                      </Text>
-                    </BoxAnimated>
-                  )}
-
-                  {Boolean(onToggleAutoPlay) && (
-                    <TapControler
-                      onPress={toggleAutoPlay}
-                      style={controlStyle.autoPlay}>
-                      <AnimatedLottieView
-                        animatedProps={autoPlayAnimatedProps}
-                        source={require('../../assets/json/lottie-auto-play.json')}
-                      />
-                    </TapControler>
-                  )}
                   {Boolean(onTapMore) && _renderMore()}
                 </Box>
               </BoxAnimated>
@@ -928,39 +864,20 @@ const Player = forwardRef<PlayerRef, PlayerProps>((props, ref) => {
                   </Text>
                 </Box>
                 <Box style={controlStyle.line}>
-                  {Boolean(onToggleAutoPlay) && (
-                    <BoxAnimated
-                      style={[controlStyle.autoPlayText, autoPlayTextStyle]}>
-                      <Text
-                        size={fontSizeLine(11)}
-                        lineHeight={fontSizeLine(16)}
-                        color={'#fff'}>
-                        {allowAutoPlayVideo ? onAutoPlayText : offAutoPlayText}
-                      </Text>
-                    </BoxAnimated>
-                  )}
-                  {Boolean(onToggleAutoPlay) && (
-                    <TapControler
-                      onPress={toggleAutoPlay}
-                      style={controlStyle.autoPlay}>
-                      <AnimatedLottieView
-                        animatedProps={autoPlayAnimatedProps}
-                        source={require('../../assets/json/lottie-auto-play.json')}
-                      />
-                    </TapControler>
-                  )}
                   {Boolean(onTapMore) && _renderMore()}
                 </Box>
               </BoxAnimated>
               <Box style={controlStyle.pauseView}>
-                <TapControler
-                  onPress={onPauseTapHandler}
-                  style={controlStyle.pause}>
-                  <AnimatedLottieView
-                    animatedProps={playAnimatedProps}
-                    source={require('../../assets/json/lottie-play.json')}
-                  />
-                </TapControler>
+                {!loading && (
+                  <TapControler
+                    onPress={onPauseTapHandler}
+                    style={controlStyle.pause}>
+                    <AnimatedLottieView
+                      animatedProps={playAnimatedProps}
+                      source={require('../../assets/json/lottie-play.json')}
+                    />
+                  </TapControler>
+                )}
               </Box>
               <BoxAnimated
                 style={[
